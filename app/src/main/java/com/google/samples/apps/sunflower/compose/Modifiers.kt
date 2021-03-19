@@ -43,7 +43,7 @@ private data class VisibleModifier(
         val placeable = measurable.measure(constraints)
         return layout(placeable.width, placeable.height) {
             if (isVisible()) {
-                placeable.place(0, 0)
+                placeable.place(0, 3000)
             }
         }
     }

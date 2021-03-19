@@ -168,6 +168,12 @@ fun PlantDetails(
     }
 
     Box(modifier) {
+        PlantToolbar(
+            toolbarState, plant.name, callbacks,
+            toolbarAlpha = { toolbarAlpha.value },
+            contentAlpha = { contentAlpha.value }
+        )
+
         PlantDetailsContent(
             scrollState = scrollState,
             toolbarState = toolbarState,
@@ -181,11 +187,6 @@ fun PlantDetails(
             plant = plant,
             isPlanted = isPlanted,
             onFabClick = callbacks.onFabClick,
-            contentAlpha = { contentAlpha.value }
-        )
-        PlantToolbar(
-            toolbarState, plant.name, callbacks,
-            toolbarAlpha = { toolbarAlpha.value },
             contentAlpha = { contentAlpha.value }
         )
     }
@@ -417,18 +418,16 @@ private fun PlantInformation(
                 .padding(horizontal = Dimens.PaddingSmall)
                 .align(Alignment.CenterHorizontally)
         )
-        CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.medium) {
-            Text(
-                text = getQuantityString(R.plurals.watering_needs_suffix, wateringInterval),
-                modifier = Modifier
-                    .padding(
-                        start = Dimens.PaddingSmall,
-                        end = Dimens.PaddingSmall,
-                        bottom = Dimens.PaddingNormal
-                    )
-                    .align(Alignment.CenterHorizontally)
-            )
-        }
+        Text(
+            text = getQuantityString(R.plurals.watering_needs_suffix, wateringInterval),
+            modifier = Modifier
+                .padding(
+                    start = Dimens.PaddingSmall,
+                    end = Dimens.PaddingSmall,
+                    bottom = Dimens.PaddingNormal
+                )
+                .align(Alignment.CenterHorizontally)
+        )
         PlantDescription(description)
     }
 }
