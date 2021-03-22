@@ -60,3 +60,30 @@ Replace with `MaterialTheme.colors.primaryVariant` or remove the color attribute
 will use the current text color, which will be already adapted to a dark mode).
 
 ### Live Literals
+
+You can read more about live literals [here](https://developer.android.com/jetpack/compose/tooling#live-literals).
+
+#### Changing subtitle size
+The "Watering needs" subtitle seems too small. Can you change it to `20.sp`?
+
+**Requirement**
+Don't enable the live literals highlight
+
+**Solution**
+Change the size attribute of the `Text` containing "Water needs" to `fontSize = 20.sp`. Experiment 
+with different values.
+
+#### Changing subtitle color
+In the same spirit, can you change the subtitle color to red?
+
+**Solution**
+Change the size attribute of the `Text` containing "Water needs" to `color = Color(0xFFFF0000)`. Ask 
+the developer why he/she didn't use Color.Red. If he/she used it, ask them the possible reason why 
+it doesn't work (value vs reference).
+
+#### Understanding live literals
+In `PlantInformation`, there is a variable named `showSubtitle` and it's set to `true`. With the 
+logic written in the composable, what do you think will happen if the variable is set to `false`?
+
+#### DIY
+You're now use too Live Literals. Can you add one by yourself?
