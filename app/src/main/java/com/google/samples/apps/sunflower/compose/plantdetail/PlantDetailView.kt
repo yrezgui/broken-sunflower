@@ -69,6 +69,7 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidViewBinding
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.core.text.HtmlCompat
@@ -168,6 +169,12 @@ fun PlantDetails(
     }
 
     Box(modifier) {
+        PlantToolbar(
+            toolbarState, plant.name, callbacks,
+            toolbarAlpha = { toolbarAlpha.value },
+            contentAlpha = { contentAlpha.value }
+        )
+
         PlantDetailsContent(
             scrollState = scrollState,
             toolbarState = toolbarState,
@@ -181,11 +188,6 @@ fun PlantDetails(
             plant = plant,
             isPlanted = isPlanted,
             onFabClick = callbacks.onFabClick,
-            contentAlpha = { contentAlpha.value }
-        )
-        PlantToolbar(
-            toolbarState, plant.name, callbacks,
-            toolbarAlpha = { toolbarAlpha.value },
             contentAlpha = { contentAlpha.value }
         )
     }
@@ -395,6 +397,8 @@ private fun PlantInformation(
     toolbarState: ToolbarState,
     modifier: Modifier = Modifier
 ) {
+    val showSubtitle = false
+
     Column(modifier = modifier.padding(Dimens.PaddingLarge)) {
         Text(
             text = name,
@@ -409,26 +413,29 @@ private fun PlantInformation(
                 .onGloballyPositioned { onNamePosition(it.positionInWindow().y) }
                 .visible { toolbarState == ToolbarState.HIDDEN }
         )
-        Text(
-            text = stringResource(id = R.string.watering_needs_prefix),
-            color = MaterialTheme.colors.primaryVariant,
-            fontWeight = FontWeight.Bold,
-            modifier = Modifier
-                .padding(horizontal = Dimens.PaddingSmall)
-                .align(Alignment.CenterHorizontally)
-        )
-        CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.medium) {
+
+        if(showSubtitle) {
             Text(
-                text = getQuantityString(R.plurals.watering_needs_suffix, wateringInterval),
+                text = "Water needs",
+                color = Color(0xFF00FF00),
+                fontWeight = FontWeight.Bold,
+                fontSize = 10.sp,
                 modifier = Modifier
-                    .padding(
-                        start = Dimens.PaddingSmall,
-                        end = Dimens.PaddingSmall,
-                        bottom = Dimens.PaddingNormal
-                    )
+                    .padding(horizontal = Dimens.PaddingSmall)
                     .align(Alignment.CenterHorizontally)
             )
         }
+
+        Text(
+            text = getQuantityString(R.plurals.watering_needs_suffix, wateringInterval),
+            modifier = Modifier
+                .padding(
+                    start = Dimens.PaddingSmall,
+                    end = Dimens.PaddingSmall,
+                    bottom = Dimens.PaddingNormal
+                )
+                .align(Alignment.CenterHorizontally)
+        )
         PlantDescription(description)
     }
 }

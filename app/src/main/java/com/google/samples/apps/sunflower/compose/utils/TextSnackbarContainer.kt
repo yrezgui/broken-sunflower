@@ -47,7 +47,6 @@ fun TextSnackbarContainer(
     content: @Composable () -> Unit
 ) {
     Box(modifier) {
-        content()
 
         val onDismissState by rememberUpdatedState(onDismissSnackbar)
         LaunchedEffect(showSnackbar, snackbarText) {
@@ -55,7 +54,7 @@ fun TextSnackbarContainer(
                 try {
                     snackbarHostState.showSnackbar(
                         message = snackbarText,
-                        duration = SnackbarDuration.Short
+                        duration = SnackbarDuration.Indefinite
                     )
                 } finally {
                     onDismissState()
@@ -75,5 +74,7 @@ fun TextSnackbarContainer(
                 Snackbar(it)
             }
         }
+
+        content()
     }
 }
